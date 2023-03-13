@@ -121,21 +121,21 @@ idResponse = await req.json();
  return new Promise ( async function(){
    let cartona = "" ; 
    cartona += `
-   <div class="container">
+   <div class="container ">
    <header class="hstack justify-content-between">
-      <h1 class="text-center h3 py-4">Details Game</h1>
-      <button class="btn-close btn-close-white" id="btnClose"></button>
+      <h1 class="text-center Details h3 py-4">Details Game</h1>
+      <button class="btn-close Details btn-close-white" id="btnClose"></button>
    </header>
    <div class="row g-4" id="detailsContent">
  <div class="col-md-4">
- <img src="${idResponse.thumbnail}" class="w-100 imaget" alt="image details">
+ <img src="${idResponse.thumbnail}" class="w-100 Details imaget" alt="image details">
  </div>
  <div class="col-md-8">
- <h3>Title:${idResponse.title}</h3>
- <p>Category: <span class="badge text-bg-info"> ${idResponse.genre}</span> </p>
- <p>Platform: <span class="badge text-bg-info"> ${idResponse.platform}</span> </p>
- <p>Status: <span class="badge text-bg-info"> ${idResponse.status}</span> </p>
- <p class="small">${idResponse.description}</p>
+ <h3 class="Details">Title:${idResponse.title}</h3>
+ <p class="Details">Category: <span class="badge Details text-bg-info"> ${idResponse.genre}</span> </p>
+ <p class="Details">Platform: <span class="badge Details text-bg-info"> ${idResponse.platform}</span> </p>
+ <p class="Details">Status: <span class="badge Details text-bg-info"> ${idResponse.status}</span> </p>
+ <p class="small Details">${idResponse.description}</p>
  <a class="btn btn-outline-warning" target="_blank" href="${idResponse.game_url}">Show Game</a>
  </div>
  
@@ -151,7 +151,10 @@ idResponse = await req.json();
       document.querySelector(".games").classList.remove("d-none");
 
    })
-
+    let Details = document.querySelectorAll(".Details");
+    for(let i = 0 ; i<Details.length ; i++){
+      Details[i].style.color="white";
+    }
 
 
 
@@ -162,3 +165,15 @@ idResponse = await req.json();
 
 
 
+ let hoverLink =   document.querySelectorAll(".nav-link") ;
+ for(let i = 0 ; i< hoverLink.length ; i++){
+     hoverLink[i].addEventListener("mouseenter" , function(){
+      hoverLink[i].style.color="#09c";
+     })
+ }
+
+ for(let i = 0 ; i< hoverLink.length ; i++){
+     hoverLink[i].addEventListener("mouseleave" , function(){
+      hoverLink[i].style.color="white";
+     })
+ }
