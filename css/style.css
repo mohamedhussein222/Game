@@ -7,6 +7,9 @@ header img {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    font-family: 'Comfortaa', cursive;
+font-family: 'Labrada', serif;
+font-family: 'Shantell Sans', cursive;
 }
 .navbar{
     transform: translateY(-50%) !important;
@@ -18,12 +21,12 @@ header img {
 body{
     background-color: #272B30 ;
 }
-.nav-item .nav-link.active{
+/* .nav-item .nav-link.active{
     color: #09c !important;
 }
 .nav-item .nav-link:hover{
     color: #09c;
-}
+} */
 .nav-item .nav-link{
     transition: all 0.5s;
 }
