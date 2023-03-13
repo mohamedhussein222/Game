@@ -1,57 +1,42 @@
-let allData= [];
 
-
-  function data(category){
-  return new Promise(function(){
-   const req = new XMLHttpRequest();
-   req.open("get" , `https://free-to-play-games-database.p.rapidapi.com/api/games?category=${category}`);
-   req.setRequestHeader("X-RapidAPI-Key", "92a276a025mshb9c21a56e205bb1p1af9cfjsnd183e7fd9059");
-   req.send();
-   req.addEventListener("readystatechange" , function(){
-       if(req.readyState==4 && req.status==200){
-          allData = JSON.parse(req.response);
-         console.log(allData)
-       displayData();
-       
-       }
-   })
-  })
+let Response = [];
+async  function data (category){
+let getData = await fetch(`https://free-to-play-games-database.p.rapidapi.com/api/games?category=${category}`, {
+  method:'get' ,
+ headers: {
+    'X-RapidAPI-Key': '92a276a025mshb9c21a56e205bb1p1af9cfjsnd183e7fd9059',
+    'X-RapidAPI-Host': 'free-to-play-games-database.p.rapidapi.com',
+ }
+}
+)
+Response = await getData.json(); 
+await displayData()
 }
 
-
-
-data("MMORPG")
-
-
-
-
-
-let details = document.querySelector(".details") ; 
-let games = document.querySelector(".games");
-
-function displayData (){
-   return new Promise(function(){
+data("PIXEL")
+ function displayData (){
+   // return new Promise( async   function(){
       let cartona = "";
-      for(let i =0 ; i <allData.length ;i++){
+      for(let i =0 ; i <Response.length ;i++){
       cartona += `
       
       <div class="col-lg-3">
-            <div  onclick="dataD(${allData[i].id}), ${details.classList.remove("d-none")}" class="card cardID h-100 bg-transparent" role="button" "="">
+            <div  onclick="dataD(${Response[i].id})" class="card cardID h-100 bg-transparent" role="button" "="">
                <div class="card-body">
                   <figure class="position-relative">
-                     <img class="card-img-top object-fit-cover h-100" src="${allData[i].thumbnail}">
+                     <img class="card-img-top object-fit-cover h-100" src="${Response[i].thumbnail}">
                   
                   </figure>
       
                   <figcaption>
       
                      <div class="hstack justify-content-between">
-                        <h3 class="h6 small">${allData[i].publisher}</h3>
+                        <h3 class="h6 small">${Response[i].publisher}</h3>
                         <span class="badge text-bg-primary p-2">Free</span>
                      </div>
       
                      <p class="card-text small text-center opacity-50">
-                       ${allData[i].short_description}
+                       ${Response[i].short_description}
                      </p>
       
                   </figcaption>
@@ -59,8 +44,8 @@ function displayData (){
       
                <footer class="card-footer small hstack justify-content-between">
       
-                  <span class="badge badge-color">${allData[i].genre}</span>
-                  <span class="badge badge-color">${allData[i].platform}</span>
+                  <span class="badge badge-color">${Response[i].genre}</span>
+                  <span class="badge badge-color">${Response[i].platform}</span>
       
                </footer>
             </div>
@@ -72,65 +57,68 @@ function displayData (){
       
       `
       document.querySelector(".row").innerHTML=cartona;
-  }
-   })
-}
-
-document.querySelector(".MMORPG").addEventListener("click" , function(){
-   data("MMORPG") ; 
-
-})
-document.querySelector(".shooter").addEventListener("click" , function(){
-   data("SHOOTER") ; 
-
-})
-document.querySelector(".SAILING").addEventListener("click" , function(){
-   data("SAILING") ; 
-
-})
-document.querySelector(".PERMADEATH").addEventListener("click" , function(){
-   data("PERMADEATH") ; 
-
-})
-document.querySelector(".SUPERHERO").addEventListener("click" , function(){
-   data("SUPERHERO") ; 
-
-})
-document.querySelector(".PIXEL").addEventListener("click" , function(){
-   data("PIXEL") ; 
-
-})
-
-
-
-
-
-let detailsGame = [];
-   function dataD(id){
-
-    let details = new XMLHttpRequest ();
-    details.open("get" , `https://free-to-play-games-database.p.rapidapi.com/api/game?id="${id}"`);
-    details.setRequestHeader("X-RapidAPI-Key", "92a276a025mshb9c21a56e205bb1p1af9cfjsnd183e7fd9059");
-    details.send();
-    details.addEventListener("readystatechange" , function(){
-        if(details.readyState==4 &&details.status==200){
-          detailsGame =JSON.parse(details.response);
-          console.log(detailsGame)
-          displatDetails ();
      
-        }
-    })
-
-
-
- } 
-
-
-
+  }
+   // })
+   let xx = document.querySelectorAll(".card");
+   
+   for(let i = 0 ; i<xx.length ; i++){
+      xx[i].addEventListener("click" , function(){
+         document.querySelector(".games").classList.add("d-none");
+         document.querySelector(".details").classList.remove("d-none")
+      })
+   }
 
  
-  
-  function displatDetails (){
+}
+
+
+
+ document.querySelector(".MMORPG").addEventListener("click" , function(){
+    data("MMORPG") ; 
+
+ })
+ document.querySelector(".shooter").addEventListener("click" , function(){
+    data("SHOOTER") ; 
+    document.querySelector(".nav-link").classList.add("active");
+
+ })
+ document.querySelector(".SAILING").addEventListener("click" , function(){
+    data("SAILING") ; 
+
+ })
+ document.querySelector(".PERMADEATH").addEventListener("click" , function(){
+    data("PERMADEATH") ; 
+
+ })
+ document.querySelector(".SUPERHERO").addEventListener("click" , function(){
+    data("SUPERHERO") ; 
+
+ })
+ document.querySelector(".PIXEL").addEventListener("click" , function(){
+    data("PIXEL") ; 
+
+ })
+
+   let idResponse = [];
+ async  function dataD (id){
+   let req = await fetch(`https://free-to-play-games-database.p.rapidapi.com/api/game?id="${id}`, {
+     method:'get' ,
+    headers: {
+       'X-RapidAPI-Key': '92a276a025mshb9c21a56e205bb1p1af9cfjsnd183e7fd9059',
+       'X-RapidAPI-Host': 'free-to-play-games-database.p.rapidapi.com',
+    }
+   }
+   )
+idResponse = await req.json(); 
+   console.log(idResponse)
+  await displatDetails();
+
+ 
+   }
+   // dataD(427);
+    function displatDetails (){
+ return new Promise ( async function(){
    let cartona = "" ; 
    cartona += `
    <div class="container">
@@ -139,29 +127,38 @@ let detailsGame = [];
       <button class="btn-close btn-close-white" id="btnClose"></button>
    </header>
    <div class="row g-4" id="detailsContent">
-<div class="col-md-4">
-<img src="${detailsGame.thumbnail}" class="w-100 imaget" alt="image details">
-</div>
-<div class="col-md-8">
-<h3>Title:${detailsGame.title}</h3>
-<p>Category: <span class="badge text-bg-info"> ${detailsGame.genre}</span> </p>
-<p>Platform: <span class="badge text-bg-info"> ${detailsGame.platform}</span> </p>
-<p>Status: <span class="badge text-bg-info"> ${detailsGame.status}</span> </p>
-<p class="small">${detailsGame.description}</p>
-<a class="btn btn-outline-warning" target="_blank" href="${detailsGame.game_url}">Show Game</a>
-</div>
-
-</div>
-</div>
-   
-   
-   
-   
-   
-   
+ <div class="col-md-4">
+ <img src="${idResponse.thumbnail}" class="w-100 imaget" alt="image details">
+ </div>
+ <div class="col-md-8">
+ <h3>Title:${idResponse.title}</h3>
+ <p>Category: <span class="badge text-bg-info"> ${idResponse.genre}</span> </p>
+ <p>Platform: <span class="badge text-bg-info"> ${idResponse.platform}</span> </p>
+ <p>Status: <span class="badge text-bg-info"> ${idResponse.status}</span> </p>
+ <p class="small">${idResponse.description}</p>
+ <a class="btn btn-outline-warning" target="_blank" href="${idResponse.game_url}">Show Game</a>
+ </div>
+ 
+ </div>
+ </div>
    `
    document.querySelector(".details").innerHTML= cartona ;
 
-   
+
+   let btnClose = document.querySelector(".btn-close");
+   btnClose.addEventListener("click" , function(){
+      document.querySelector(".details").classList.add("d-none")
+      document.querySelector(".games").classList.remove("d-none");
+
+   })
+
+
+
+
+
 }
+
+ )}
+
+
 
